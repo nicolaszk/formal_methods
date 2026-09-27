@@ -34,7 +34,17 @@ next
 qed
 
 lemma l2: "cat xs [] = xs"
-  sorry
+proof(induction xs)
+  case Nil
+  have "cat [] [] = []" by (rule cateq1)
+  then show ?case .
+ next
+  case (Cons x xs)
+  have "cat (x#xs) [] = x # cat xs []" by (rule cateq2)
+  also have "... = x # xs" using Cons.IH by simp
+  finally show ?case .
+qed
+
 
 lemma l3: "\<forall>ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reverso xs)"
   sorry
