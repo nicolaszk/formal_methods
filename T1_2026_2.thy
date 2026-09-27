@@ -35,15 +35,14 @@ qed
 
 lemma l2: "cat xs [] = xs"
 proof(induction xs)
-  case Nil
-  have "cat [] [] = []" by (rule cateq1)
-  then show ?case .
+  have "cat [] [] = []" by (simp only: cateq1)
+  then show "cat [] [] = []" by (simp)
 next
-  case (Cons x xs)
-  assume IH: "cat xs [] = xs" 
-  have "cat (x#xs) [] = x # cat xs []" by (rule cateq2)
-  have "x # cat xs [] = x # xs" by (subst IH)
-  finally show ?case .
+  fix xs::"'a list" and x::'a
+  assume HI: "cat xs [] = xs"
+  have "cat (x#xs) [] = x # cat xs []" by (simp only: cateq2)
+  have "x # cat xs [] = x # xs" by (simp only: HI)
+  then show "cat (x#xs) [] = x # xs" by (simp)
 qed
 
 
