@@ -38,10 +38,11 @@ proof(induction xs)
   case Nil
   have "cat [] [] = []" by (rule cateq1)
   then show ?case .
- next
+next
   case (Cons x xs)
+  assume IH: "cat xs [] = xs" 
   have "cat (x#xs) [] = x # cat xs []" by (rule cateq2)
-  also have "... = x # xs" using Cons.IH by simp
+  have "x # cat xs [] = x # xs" by (subst IH)
   finally show ?case .
 qed
 
