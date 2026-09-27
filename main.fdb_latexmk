@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1790537552.22453 "/Users/zk/Desktop/2026.2/metodos_formais/formal_methods/main.tex" "main.pdf" "main" 1790537553.68854 0
-  "/Users/zk/Desktop/2026.2/metodos_formais/formal_methods/main.tex" 1790537552.00793 9580 58c3c5a43931e4f0a465a7017158d880 ""
+["pdflatex"] 1790538014.89236 "/Users/zk/Desktop/2026.2/metodos_formais/formal_methods/main.tex" "main.pdf" "main" 1790538016.39303 0
+  "/Users/zk/Desktop/2026.2/metodos_formais/formal_methods/main.tex" 1790538014.83679 9724 9bf4a25a6de117d4640990ffc7d26b5c ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1202520719 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -103,8 +103,8 @@
   "formais-32.png" 1790536203.51712 130861 157904abd8ba288d9aa33a954a0808cc ""
   "formais-41.png" 1790536428.92442 140007 040c1cae043188a558e3dfcc650884de ""
   "formais-42.png" 1790536434.13677 68173 5837981871f34d25b462988cd7d6fe49 ""
-  "main.aux" 1790537553.58821 2609 cb6424cdea03a8df9fe07d3ae363868c "pdflatex"
-  "main.tex" 1790537552.00793 9580 58c3c5a43931e4f0a465a7017158d880 ""
+  "main.aux" 1790538016.2846 2609 cb6424cdea03a8df9fe07d3ae363868c "pdflatex"
+  "main.tex" 1790538014.83679 9724 9bf4a25a6de117d4640990ffc7d26b5c ""
   (generated)
   "main.aux"
   "main.log"

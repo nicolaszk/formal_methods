@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.27)  27 SEP 2026 16:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.27)  27 SEP 2026 16:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -431,23 +431,23 @@ Package pdftex.def Info: formais-2.png  used on input line 168.
 <formais-31.png, id=27, 1673.25125pt x 883.3pt>
 File: formais-31.png Graphic file (type png)
 <use formais-31.png>
-Package pdftex.def Info: formais-31.png  used on input line 196.
+Package pdftex.def Info: formais-31.png  used on input line 197.
 (pdftex.def)             Requested size: 418.82242pt x 221.09401pt.
 <formais-32.png, id=28, 1673.25125pt x 910.40125pt>
 File: formais-32.png Graphic file (type png)
 <use formais-32.png>
-Package pdftex.def Info: formais-32.png  used on input line 197.
+Package pdftex.def Info: formais-32.png  used on input line 198.
 (pdftex.def)             Requested size: 418.82242pt x 227.87758pt.
  [4 <./formais-31.png>] [5 <./formais-32.png>]
 <formais-41.png, id=37, 1665.22125pt x 1466.47874pt>
 File: formais-41.png Graphic file (type png)
 <use formais-41.png>
-Package pdftex.def Info: formais-41.png  used on input line 238.
+Package pdftex.def Info: formais-41.png  used on input line 240.
 (pdftex.def)             Requested size: 418.81981pt x 368.83408pt.
 <formais-42.png, id=38, 1514.65875pt x 774.895pt>
 File: formais-42.png Graphic file (type png)
 <use formais-42.png>
-Package pdftex.def Info: formais-42.png  used on input line 239.
+Package pdftex.def Info: formais-42.png  used on input line 241.
 (pdftex.def)             Requested size: 418.80896pt x 214.26144pt.
  [6 <./formais-41.png>] [7 <./formais-42.png>] (./main.aux)
  ***********
@@ -456,15 +456,15 @@ L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 8375 strings out of 467525
- 130522 string characters out of 5418982
+ 8382 strings out of 467525
+ 130618 string characters out of 5418982
  979323 words of memory out of 5000000
- 37183 multiletter control sequences out of 15000+600000
+ 37190 multiletter control sequences out of 15000+600000
  672904 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,10n,65p,342b,1708s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on main.pdf (7 pages, 1068428 bytes).
+Output written on main.pdf (7 pages, 1068709 bytes).
 PDF statistics:
  102 PDF objects out of 1000 (max. 8388607)
  57 compressed objects within 1 object stream

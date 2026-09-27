@@ -193,6 +193,7 @@ qed
 \[ \forall xs, ys \in List(\tau) \cdot \text{reverso}(\text{cat}(xs, ys)) = \text{cat}(\text{reverso}(ys), \text{reverso}(xs)) \]
  
 \subsection*{Prova Formal Feita à Mão}
+\text{Nota: Utilizando "rev" para representar "reverso" por brevidade.}
 \provaManuscrita{formais-31.png}{}{fig:lema3.1}
 \provaManuscrita{formais-32.png}{Demonstração detalhada e passo a passo à mão para o Lema 3.}{fig:lema3.2}
  
@@ -235,6 +236,7 @@ lemma l3: "\<forall>ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reve
 \[ \forall xs \in List(\tau) \cdot \text{reverso}(\text{reverso}(xs)) = xs \]
  
 \subsection*{Prova Formal Feita à Mão}
+\text{Nota: Utilizando "rev" para representar "reverso" por brevidade.}
 \provaManuscrita{formais-41.png}{}{fig:teoremapt1}
 \provaManuscrita{formais-42.png}{Demonstração detalhada e passo a passo à mão para o Teorema Principal.}{fig:teoremapt2}
  
