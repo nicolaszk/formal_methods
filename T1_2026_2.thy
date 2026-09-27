@@ -12,24 +12,24 @@ reveq2: "reverso (x#xs) = cat (reverso xs) [x]"
 
 lemma l1: "\<forall>ys zs :: 'a list . cat xs (cat ys zs) = cat (cat xs ys) zs"
 proof (induction xs)
-  case Nil
-  show ?case
+  show "\<forall>ys zs :: 'a list . cat [] (cat ys zs) = cat (cat [] ys) zs"
   proof (intro allI)
     fix ys zs :: "'a list"
-    have "cat [] (cat ys zs) = cat ys zs" by (rule cateq1)
+    have "cat [] (cat ys zs) = cat ys zs" by (simp only: cateq1)
     also have "... = cat (cat [] ys) zs" by (simp only: cateq1)
-    finally show "cat [] (cat ys zs) = cat (cat [] ys) zs" .
+    finally show "cat [] (cat ys zs) = cat (cat [] ys) zs" by (simp)
   qed
 next
-  case (Cons x xs)
-  show ?case
-  proof (intro allI)
+  fix xs::"'a list" and x::'a
+  assume HI:"\<forall> ys zs :: 'a list . cat xs (cat ys zs) = cat (cat xs ys) zs"
+  show "\<forall>ys zs :: 'a list . cat (x#xs) (cat ys zs) = cat (cat (x#xs) ys) zs"
+  proof (rule allI, rule allI)
     fix ys zs :: "'a list"
-    have "cat (x#xs) (cat ys zs) = x # cat xs (cat ys zs)" by (rule cateq2)
-    also have "... = x # cat (cat xs ys) zs" using Cons.IH by simp
+    have "cat (x#xs) (cat ys zs) = x # cat xs (cat ys zs)" by (simp only: cateq2)
+    also have "... = x # cat (cat xs ys) zs" by (simp only: HI)
     also have "... = cat (x # cat xs ys) zs" by (simp only: cateq2)
     also have "... = cat (cat (x#xs) ys) zs" by (simp only: cateq2)
-    finally show "cat (x#xs) (cat ys zs) = cat (cat (x#xs) ys) zs" .
+    finally show "cat (x#xs) (cat ys zs) = cat (cat (x#xs) ys) zs" by (simp)
   qed
 qed
 
