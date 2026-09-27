@@ -47,7 +47,28 @@ qed
 
 
 lemma l3: "\<forall>ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reverso xs)"
-  sorry
+  proof (induction xs)
+    show "\<forall>ys :: 'a list . reverso (cat [] ys) = cat (reverso ys) (reverso [])"
+    proof (intro allI)
+      fix ys :: "'a list"
+      have "reverso (cat [] ys) = reverso ys " by (simp only: cateq1)
+      also have "... = cat (reverso ys) [] " by (simp only: l2)
+      also have "... = cat (reverso ys) (reverso [])" by (simp only: reveq1)
+      finally show "reverso (cat [] ys) = cat (reverso ys) (reverso [])" by (simp)
+    qed
+  next
+    fix xs :: "'a list" and x::'a
+    assume HI: "\<forall> ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reverso xs)"
+    show "\<forall>ys :: 'a list . reverso (cat (x#xs) ys) = cat (reverso ys) (reverso (x#xs))"
+    proof (intro allI)
+      have "reverso (cat (x#xs) ys) = reverso (x#(cat xs ys)) " by (simp only: cateq2)
+      also have "... = cat (reverso (cat xs ys)) [x]" by (simp only:reveq2)
+      also have "... = cat (cat (reverso ys) (reverso xs)) [x]" by (simp only:HI)
+      also have "... = cat (reverso ys) (cat (reverso xs) [x])" by (simp only: l1)
+      also have "... = cat (reverso ys) (reverso (x#xs))" by (simp only: reveq2)
+      finally show "reverso (cat (x#xs) ys) = cat (reverso ys) (reverso (x#xs))" by (simp)
+    qed
+  qed
 
 theorem t1: "reverso (reverso xs) = xs"
   sorry
