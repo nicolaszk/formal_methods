@@ -72,6 +72,21 @@ lemma l3: "\<forall>ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reve
   qed
 
 theorem t1: "reverso (reverso xs) = xs"
-  sorry
-
+  proof (induction xs)
+    have "reverso (reverso []) = reverso []" by (simp only: reveq1)
+    also have "reverso [] = []" by (simp only: reveq1)
+    then show "reverso (reverso []) = []" by (simp)
+  next
+    fix xs :: "'a list" and x::'a
+    assume HI: "reverso (reverso xs) = xs"
+    have "reverso (reverso (x#xs)) = reverso (cat (reverso xs) [x])" by (simp only: reveq2)
+    also have "... = cat (reverso [x]) (reverso (reverso xs))" by (simp only: l3)
+    also have "... = cat (reverso (x#[])) xs" by (simp only: HI) (* transf. [x] \<rightarrow> x#[] nesse passo *)
+    also have "... = cat (cat (reverso []) [x]) xs" by (simp only: reveq2)
+    also have "... = cat (cat [] [x]) xs" by (simp only: reveq1)
+    also have "... = cat (x#[]) xs" by (simp only: cateq1) (* transf. [x] \<rightarrow> x#[] nesse passo *)
+    also have "... = x # (cat [] xs)" by (simp only: cateq2)
+    also have "... = x # xs" by (simp only: cateq1)
+    finally show "reverso (reverso (x#xs)) = x # xs" by (simp)
+  qed
 end
