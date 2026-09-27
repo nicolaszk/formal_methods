@@ -1,0 +1,25 @@
+theory T1_2026_2
+  imports Main
+begin
+
+primrec cat :: "'a list \<Rightarrow> 'a list \<Rightarrow> 'a list" where
+cateq1: "cat [] ys = ys" |
+cateq2: "cat (x#xs) ys = x#cat xs ys"
+
+primrec reverso :: "'a list \<Rightarrow> 'a list" where
+reveq1: "reverso [] = []" |
+reveq2: "reverso (x#xs) = cat (reverso xs) [x]"
+
+lemma l1: "\<forall>ys zs :: 'a list . cat xs (cat ys zs) = cat (cat xs ys) zs"
+  sorry
+
+lemma l2: "cat xs [] = xs"
+  sorry
+
+lemma l3: "\<forall>ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reverso xs)"
+  sorry
+
+theorem t1: "reverso (reverso xs) = xs"
+  sorry
+
+end
