@@ -1,0 +1,265 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{caption} 
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{float} 
+ 
+\makeatletter
+\newcommand{\inst}[1]{$^{#1}$}
+\newcommand{\nextinstitute}{\par\vspace{2pt}}
+\newcommand{\address}[1]{\gdef\@address{#1}}
+\newcommand{\email}[1]{\gdef\@email{#1}}
+\address{}
+\email{}
+\renewcommand{\maketitle}{%
+  \thispagestyle{empty}
+  \begin{center}
+    {\Large\bfseries \@title \par}
+    \vspace{0.9em}
+    {\@author \par}
+    \vspace{0.9em}
+    {\small \@address \par}
+    \vspace{0.4em}
+    {\small\texttt{\@email} \par}
+  \end{center}
+  \vspace{1.2em}
+}
+\makeatother
+% ==========================================
+% CONFIGURAÇÃO DO CÓDIGO ISABELLE / ISAR
+% ==========================================
+
+\lstdefinelanguage{Isabelle}{
+  keywords={
+    theory, imports, begin, end, datatype, primrec, fun,
+    definition, lemma, theorem, proof, qed, have, show,
+    fix, assume, arbitrary, using, by, auto, simp, induction
+  },
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={cat, reverso, Nil, Cons},
+  ndkeywordstyle=\color{purple}\bfseries,
+  sensitive=true,
+  comment=[l]{(*},
+  morecomment=[s]{(*}{*)},
+  commentstyle=\color{gray}\itshape,
+  stringstyle=\color{red},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  aboveskip=6pt,
+  belowskip=6pt
+}
+
+\lstset{language=Isabelle}
+ 
+
+\newcommand{\provaManuscrita}[3]{%
+  \par\vspace{4pt}
+  \centering
+  \IfFileExists{#1}{%
+    \includegraphics[
+      width=0.92\textwidth,
+      height=0.68\textheight,
+      keepaspectratio
+    ]{#1}%
+  }{%
+    \framebox{\parbox[c][5cm][c]{0.9\textwidth}{%
+      \centering \color{gray}
+      [ Imagem "\texttt{#1}" não encontrada ]
+    }}%
+  }
+  \captionof{figure}{#2}
+  \label{#3}
+  \par\vspace{6pt}
+}
+\title{Métodos Formais --- Trabalho 1\\Provas por Indução de Especificações Equacionais Recursivas}
+ 
+\author{Nicolas Borges Warmeling\inst{1},Germano Bruscato Corrêa\inst{1}}
+ 
+\address{Pontifícia Universidade Católica do Rio Grande do Sul (PUCRS)\\
+  90619-900 -- Porto Alegre -- RS -- Brasil\\
+  Disciplina Métodos Formais -- Professor Júlio Machado\\}
+ 
+\email{\{nicolas.warmeling,germano.bruscato\}@edu.pucrs.br}
+ 
+\begin{document}
+ 
+\maketitle
+ 
+% ==========================================
+% ESPECIFICAÇÃO DAS FUNÇÕES
+% ==========================================
+\section{Especificação das Funções}
+ 
+Para a realização das demonstrações, foram consideradas as seguintes especificações de funções recursivas sobre o tipo indutivo de listas $List(\tau)$:
+ 
+\begin{align*}
+    &\text{cat}([], ys) = ys \tag{cateq1} \\
+    &\text{cat}(x:xs, ys) = x:\text{cat}(xs, ys) \tag{cateq2} \\[6pt]
+    &\text{reverso}([]) = [] \tag{reveq1} \\
+    &\text{reverso}(x:xs) = \text{cat}(\text{reverso}(xs), [x]) \tag{reveq2}
+\end{align*}
+ 
+\vspace{0.3cm}
+\hrule
+\vspace{0.5cm}
+ 
+% ==========================================
+% LEMA 1: Associatividade da Concatenação
+% ==========================================
+\section{Lema Auxiliar 1: Associatividade de \texttt{cat}}
+ 
+\noindent \textbf{Enunciado:}
+\[ \forall xs, ys, zs \in List(\tau) \cdot \text{cat}(xs, \text{cat}(ys, zs)) = \text{cat}(\text{cat}(xs, ys), zs) \]
+ 
+\subsection*{Prova Formal Feita à Mão}
+
+\provaManuscrita{formais-1.png}{Demonstração detalhada e passo a passo à mão para o Lema 1.}{fig:lema1}
+ 
+\subsection*{Prova em Isabelle / Isar}
+\begin{lstlisting}[caption={Código-fonte Isar para o Lema 1}]
+lemma l1: "\<forall>ys zs :: 'a list . cat xs (cat ys zs) = cat (cat xs ys) zs"
+proof (induction xs)
+  show "\<forall>ys zs :: 'a list . cat [] (cat ys zs) = cat (cat [] ys) zs"
+  proof (intro allI)
+    fix ys zs :: "'a list"
+    have "cat [] (cat ys zs) = cat ys zs" by (simp only: cateq1)
+    also have "... = cat (cat [] ys) zs" by (simp only: cateq1)
+    finally show "cat [] (cat ys zs) = cat (cat [] ys) zs" by (simp)
+  qed
+next
+  fix xs::"'a list" and x::'a
+  assume HI:"\<forall> ys zs :: 'a list . cat xs (cat ys zs) = cat (cat xs ys) zs"
+  show "\<forall>ys zs :: 'a list . cat (x#xs) (cat ys zs) = cat (cat (x#xs) ys) zs"
+  proof (rule allI, rule allI)
+    fix ys zs :: "'a list"
+    have "cat (x#xs) (cat ys zs) = x # cat xs (cat ys zs)" by (simp only: cateq2)
+    also have "... = x # cat (cat xs ys) zs" by (simp only: HI)
+    also have "... = cat (x # cat xs ys) zs" by (simp only: cateq2)
+    also have "... = cat (cat (x#xs) ys) zs" by (simp only: cateq2)
+    finally show "cat (x#xs) (cat ys zs) = cat (cat (x#xs) ys) zs" by (simp)
+  qed
+qed
+\end{lstlisting}
+
+ 
+% ==========================================
+% LEMA 2: Elemento Neutro à Direita
+% ==========================================
+\section{Lema Auxiliar 2: Elemento Neutro à Direita de \texttt{cat}}
+ 
+\noindent \textbf{Enunciado:}
+\[ \forall xs \in List(\tau) \cdot \text{cat}(xs, []) = xs \]
+ 
+\subsection*{Prova Formal Feita à Mão}
+\provaManuscrita{formais-2.png}{Demonstração detalhada e passo a passo à mão para o Lema 2.}{fig:lema2}
+ 
+\subsection*{Prova em Isabelle / Isar}
+\begin{lstlisting}[caption={Código-fonte Isar para o Lema 2}]
+lemma l2: "cat xs [] = xs"
+proof(induction xs)
+  have "cat [] [] = []" by (simp only: cateq1)
+  then show "cat [] [] = []" by (simp)
+next
+  fix xs::"'a list" and x::'a
+  assume HI: "cat xs [] = xs"
+  have "cat (x#xs) [] = x # cat xs []" by (simp only: cateq2)
+  have "x # cat xs [] = x # xs" by (simp only: HI)
+  then show "cat (x#xs) [] = x # xs" by (simp)
+qed
+\end{lstlisting}
+ 
+
+ 
+% ==========================================
+% LEMA 3: Reverso da Concatenação
+% ==========================================
+\section{Lema Auxiliar 3: Distribuição do \texttt{reverso} sobre \texttt{cat}}
+ 
+\noindent \textbf{Enunciado:}
+\[ \forall xs, ys \in List(\tau) \cdot \text{reverso}(\text{cat}(xs, ys)) = \text{cat}(\text{reverso}(ys), \text{reverso}(xs)) \]
+ 
+\subsection*{Prova Formal Feita à Mão}
+\provaManuscrita{formais-31.png}{}{fig:lema3.1}
+\provaManuscrita{formais-32.png}{Demonstração detalhada e passo a passo à mão para o Lema 3.}{fig:lema3.2}
+ 
+\subsection*{Prova em Isabelle / Isar}
+\begin{lstlisting}[caption={Código-fonte Isar para o Lema 3}]
+lemma l3: "\<forall>ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reverso xs)"
+  proof (induction xs)
+    show "\<forall>ys :: 'a list . reverso (cat [] ys) = cat (reverso ys) (reverso [])"
+    proof (intro allI)
+      fix ys :: "'a list"
+      have "reverso (cat [] ys) = reverso ys " by (simp only: cateq1)
+      also have "... = cat (reverso ys) [] " by (simp only: l2)
+      also have "... = cat (reverso ys) (reverso [])" by (simp only: reveq1)
+      finally show "reverso (cat [] ys) = cat (reverso ys) (reverso [])" by (simp)
+    qed
+  next
+    fix xs :: "'a list" and x::'a
+    assume HI: "\<forall> ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reverso xs)"
+    show "\<forall>ys :: 'a list . reverso (cat (x#xs) ys) = cat (reverso ys) (reverso (x#xs))"
+    proof (intro allI)
+      fix ys :: "'a list"
+      have "reverso (cat (x#xs) ys) = reverso (x#(cat xs ys)) " by (simp only: cateq2)
+      also have "... = cat (reverso (cat xs ys)) [x]" by (simp only: reveq2)
+      also have "... = cat (cat (reverso ys) (reverso xs)) [x]" by (simp only: HI)
+      also have "... = cat (reverso ys) (cat (reverso xs) [x])" by (simp only: l1)
+      also have "... = cat (reverso ys) (reverso (x#xs))" by (simp only: reveq2)
+      finally show "reverso (cat (x#xs) ys) = cat (reverso ys) (reverso (x#xs))" by (simp)
+    qed
+  qed
+\end{lstlisting}
+ 
+\newpage
+ 
+% ==========================================
+% TEOREMA PRINCIPAL: Involução do Reverso
+% ==========================================
+\section{Teorema Principal: Involução do \texttt{reverso}}
+ 
+\noindent \textbf{Enunciado:}
+\[ \forall xs \in List(\tau) \cdot \text{reverso}(\text{reverso}(xs)) = xs \]
+ 
+\subsection*{Prova Formal Feita à Mão}
+\provaManuscrita{formais-41.png}{}{fig:teoremapt1}
+\provaManuscrita{formais-42.png}{Demonstração detalhada e passo a passo à mão para o Teorema Principal.}{fig:teoremapt2}
+ 
+\subsection*{Prova em Isabelle / Isar}
+\begin{lstlisting}[caption={Código-fonte Isar para o Teorema Principal}]
+theorem t1: "reverso (reverso xs) = xs"
+  proof (induction xs)
+    have "reverso (reverso []) = reverso []" by (simp only: reveq1)
+    also have "reverso [] = []" by (simp only: reveq1)
+    then show "reverso (reverso []) = []" by (simp)
+  next
+    fix xs :: "'a list" and x::'a
+    assume HI: "reverso (reverso xs) = xs"
+    have "reverso (reverso (x#xs)) = reverso (cat (reverso xs) [x])" by (simp only: reveq2)
+    also have "... = cat (reverso [x]) (reverso (reverso xs))" by (simp only: l3)
+    also have "... = cat (reverso (x#[])) xs" by (simp only: HI) (* transf. [x] \<rightarrow> x#[] nesse passo *)
+    also have "... = cat (cat (reverso []) [x]) xs" by (simp only: reveq2)
+    also have "... = cat (cat [] [x]) xs" by (simp only: reveq1)
+    also have "... = cat (x#[]) xs" by (simp only: cateq1) (* transf. [x] \<rightarrow> x#[] nesse passo *)
+    also have "... = x # (cat [] xs)" by (simp only: cateq2)
+    also have "... = x # xs" by (simp only: cateq1)
+    finally show "reverso (reverso (x#xs)) = x # xs" by (simp)
+  qed
+\end{lstlisting}
+ 
+\end{document}
+ 
+
