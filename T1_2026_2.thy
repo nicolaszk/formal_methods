@@ -61,9 +61,10 @@ lemma l3: "\<forall>ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reve
     assume HI: "\<forall> ys :: 'a list . reverso (cat xs ys) = cat (reverso ys) (reverso xs)"
     show "\<forall>ys :: 'a list . reverso (cat (x#xs) ys) = cat (reverso ys) (reverso (x#xs))"
     proof (intro allI)
+      fix ys :: "'a list"
       have "reverso (cat (x#xs) ys) = reverso (x#(cat xs ys)) " by (simp only: cateq2)
-      also have "... = cat (reverso (cat xs ys)) [x]" by (simp only:reveq2)
-      also have "... = cat (cat (reverso ys) (reverso xs)) [x]" by (simp only:HI)
+      also have "... = cat (reverso (cat xs ys)) [x]" by (simp only: reveq2)
+      also have "... = cat (cat (reverso ys) (reverso xs)) [x]" by (simp only: HI)
       also have "... = cat (reverso ys) (cat (reverso xs) [x])" by (simp only: l1)
       also have "... = cat (reverso ys) (reverso (x#xs))" by (simp only: reveq2)
       finally show "reverso (cat (x#xs) ys) = cat (reverso ys) (reverso (x#xs))" by (simp)
